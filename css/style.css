@@ -1,0 +1,689 @@
+@import url("https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700&display=swap");
+:root {
+  --current-pledge: 89914;
+  --goal-pledge: 100000;
+  --progress: 0%;
+}
+
+body {
+  font-size: 16px;
+  font-family: "Commissioner", sans-serif;
+  background-color: hsl(0, 0%, 98%);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+
+img {
+  display: block;
+}
+
+p, label, span {
+  color: hsl(0, 0%, 48%);
+  line-height: 1.5;
+}
+
+ul {
+  list-style: none;
+}
+
+.nav,
+.title,
+.stats,
+.about,
+.selection,
+.confirm {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.btn {
+  background-color: hsl(176, 50%, 47%);
+  cursor: pointer;
+  display: block;
+  border: #fff;
+  border-radius: 4rem;
+  color: #fff;
+  font-weight: 700;
+}
+.btn:hover {
+  background-color: hsl(176, 72%, 28%);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+.modal-container.show-modal {
+  display: block;
+}
+
+@keyframes openmodal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.hero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: url(../images/image-hero-mobile.jpg) no-repeat;
+  background-size: 100% 100%;
+  padding: 1rem 1.5rem 16.5rem 1.5rem;
+}
+.hero .toggle {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+.hero .modal-nav {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+.hero .modal-nav.show-modal {
+  display: block;
+}
+.hero .modal-nav ul {
+  position: fixed;
+  width: min(45rem, 90%);
+  top: 5.5rem;
+  left: 5%;
+  animation-name: openmodal;
+  animation-duration: 1s;
+  z-index: 20;
+}
+.hero .modal-nav ul li:nth-of-type(1), .hero .modal-nav ul li:nth-of-type(2) {
+  padding-bottom: 1.5rem;
+}
+.hero .modal-nav ul li:nth-of-type(2), .hero .modal-nav ul li:nth-of-type(3) {
+  padding-top: 1.5rem;
+  position: relative;
+}
+.hero .modal-nav ul li:nth-of-type(2)::before, .hero .modal-nav ul li:nth-of-type(3)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.hero .modal-nav ul li:nth-of-type(2):before, .hero .modal-nav ul li:nth-of-type(3):before {
+  background: #ccc;
+  top: 0;
+  left: -1.5rem;
+  height: 1px;
+  width: calc(100% + 3rem);
+}
+.hero .modal-nav ul li a {
+  color: hsl(0, 0%, 0%);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.hero .modal-nav ul li a:hover {
+  color: hsl(0, 0%, 48%);
+}
+
+.container, .confirm {
+  margin: 0 auto;
+}
+
+.container {
+  width: min(43rem, 90%);
+  margin-top: -3.5rem;
+  padding-bottom: 6rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+}
+.container .title {
+  display: grid;
+  align-items: stretch;
+  justify-content: stretch;
+  text-align: center;
+  gap: 1.5rem;
+}
+.container .title img {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+.container .title .mastercraft {
+  margin: 0 auto;
+  margin-top: -3.25rem;
+}
+.container .title h1 {
+  font-size: 1.5rem;
+}
+.container .title__buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+.container .title__buttons .btn-project {
+  padding: 0 2.5rem;
+}
+.container .title__buttons .btn-bookmark {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+}
+.container .title__buttons .btn-bookmark:hover {
+  opacity: 0.7;
+}
+.container .title__buttons .btn-bookmark span {
+  display: none;
+}
+.container .title__buttons .btn-bookmark .bookmark, .container .title__buttons .btn-bookmark .bookmarked {
+  display: none;
+}
+.container .title__buttons .btn-bookmark .bookmark.show-bookmark, .container .title__buttons .btn-bookmark .bookmarked.show-bookmark {
+  display: block;
+}
+.container .stats__list {
+  text-align: center;
+}
+.container .stats__list li:nth-of-type(2), .container .stats__list li:nth-of-type(3) {
+  margin-top: 3rem;
+  position: relative;
+}
+.container .stats__list li:nth-of-type(2)::before, .container .stats__list li:nth-of-type(3)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.container .stats__list li:nth-of-type(2):before, .container .stats__list li:nth-of-type(3):before {
+  background: #ccc;
+  top: -1.5rem;
+  left: 35%;
+  height: 1px;
+  width: 30%;
+}
+.container .stats__list li .money-pledged,
+.container .stats__list li .total-backers,
+.container .stats__list li .days-left {
+  font-size: 2rem;
+  font-weight: 700;
+  color: hsl(0, 0%, 0%);
+}
+.container .stats__bar {
+  margin-top: 2.5rem;
+  background-color: hsl(0, 0%, 98%);
+  height: 0.8rem;
+  width: 100%;
+  border-radius: 1rem;
+  z-index: 1;
+}
+.container .stats__bar .progress {
+  background-color: hsl(176, 50%, 47%);
+  width: var(--progress);
+  height: 0.8rem;
+  border-radius: 1rem;
+}
+.container .about__heading {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+.container .about__description span {
+  margin: 2rem 0;
+  display: inline-block;
+}
+.container .about .cards {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 1rem;
+}
+.container .about .cards .card {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: grid;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 1rem;
+}
+.container .about .cards .card__heading .product-name {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+.container .about .cards .card__heading .pledge {
+  color: hsl(176, 50%, 47%);
+  font-weight: 700;
+}
+.container .about .cards .card__stock {
+  align-items: center;
+}
+.container .about .cards .card__stock .stock-left {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+}
+.container .about .cards .card__stock .stock-left .left {
+  margin: auto 0;
+}
+.container .about .cards .card__stock .stock {
+  font-size: 2rem;
+  color: hsl(0, 0%, 0%);
+  font-weight: 700;
+  margin-right: 0.4rem;
+}
+.container .about .cards .card__stock .btn-reward {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+}
+.container .about .cards .card__stock .out-of-stock {
+  background-color: hsl(0, 0%, 48%);
+  cursor: default;
+}
+.container .modal-project {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+.container .modal-project.show-modal {
+  display: block;
+}
+.container .modal-project .about {
+  position: absolute;
+  top: 7.5rem;
+  left: 0;
+  right: 0;
+  width: min(43rem, 90%);
+  margin: 0 auto;
+  z-index: 20;
+  animation-name: openmodal;
+  animation-duration: 1s;
+}
+.container .modal-project .about__heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.container .modal-project .about__heading img {
+  cursor: pointer;
+}
+.container .modal-project .about__description {
+  margin-bottom: 2rem;
+}
+.container .modal-project .about .cards .card__heading {
+  display: grid;
+  align-items: stretch;
+  justify-content: stretch;
+  grid-template-columns: min-content 1fr;
+}
+.container .modal-project .about .cards .card__heading input {
+  grid-row: 1/3;
+  margin-right: 1rem;
+}
+.container .modal-project .about .cards .card__stock .stock {
+  font-size: 1.2rem;
+}
+.container .modal-project .about .cards .card__pledge {
+  display: grid;
+  align-items: stretch;
+  justify-content: center;
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+  position: relative;
+  position: relative;
+}
+.container .modal-project .about .cards .card__pledge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.container .modal-project .about .cards .card__pledge:before {
+  background: #ccc;
+  top: 0;
+  left: -1.5rem;
+  height: 1px;
+  width: calc(100% + 3rem);
+}
+.container .modal-project .about .cards .card__pledge label {
+  grid-column: 1/3;
+  justify-self: center;
+}
+.container .modal-project .about .cards .card__pledge .btn {
+  height: 3rem;
+}
+.container .modal-project .about .cards .card__pledge .placeholder {
+  position: relative;
+}
+.container .modal-project .about .cards .card__pledge .placeholder .btn-input {
+  background-color: #fff;
+  border: #ccc 1px solid;
+  color: hsl(0, 0%, 0%);
+  text-align: center;
+  width: 6.25rem;
+  cursor: text;
+}
+.container .modal-project .about .cards .card__pledge .placeholder .btn-input:hover, .container .modal-project .about .cards .card__pledge .placeholder .btn-input:focus {
+  outline: none;
+}
+.container .modal-project .about .cards .card__pledge .placeholder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.container .modal-project .about .cards .card__pledge .placeholder::after {
+  content: attr(data-placeholder);
+  top: 0.9rem;
+  left: 1.5rem;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.container .modal-project .about .cards .card__pledge .btn-continue {
+  width: 7.5rem;
+  justify-self: flex-end;
+}
+.container .modal-project .about .cards .card__pledge.error .btn-input {
+  border-color: hsl(6, 78%, 57%);
+}
+.container .modal-project .about .cards .card__pledge.error small {
+  visibility: visible;
+}
+.container .modal-project .about .cards .card__pledge.success .btn-input {
+  border-color: hsl(145, 63%, 49%);
+}
+.container .modal-project .about .cards .card__pledge .error-message {
+  position: absolute;
+  top: 6.3rem;
+  color: hsl(6, 78%, 57%);
+  visibility: hidden;
+}
+
+.modal-confirm {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+.modal-confirm.show-modal {
+  display: block;
+}
+.modal-confirm .confirm {
+  width: min(43rem, 90%);
+  text-align: center;
+  position: absolute;
+  top: 8.9rem;
+  left: 0;
+  right: 0;
+  animation-name: openmodal;
+  animation-duration: 1s;
+}
+.modal-confirm .confirm img, .modal-confirm .confirm .btn {
+  margin: 0 auto;
+}
+.modal-confirm .confirm img {
+  margin-bottom: 2rem;
+}
+.modal-confirm .confirm h3 {
+  margin-bottom: 1rem;
+}
+.modal-confirm .confirm p {
+  margin-bottom: 2rem;
+}
+.modal-confirm .confirm .btn {
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+@media only screen and (min-width: 44rem) {
+  .hero {
+    background: url(../images/image-hero-desktop.jpg) no-repeat;
+    background-size: 100% 100%;
+    padding: 2rem 10.5rem 15.5rem 10.5rem;
+  }
+  .hero .toggle {
+    display: none;
+  }
+  .hero .modal-nav {
+    display: block;
+    position: static;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .hero .modal-nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    gap: 2.5rem;
+    position: static;
+    width: auto;
+    background-color: transparent;
+    padding: 0;
+  }
+  .hero .modal-nav ul li:nth-of-type(1), .hero .modal-nav ul li:nth-of-type(2) {
+    padding-bottom: 0;
+  }
+  .hero .modal-nav ul li:nth-of-type(2), .hero .modal-nav ul li:nth-of-type(3) {
+    padding-top: 0;
+  }
+  .hero .modal-nav ul li:nth-of-type(2):before, .hero .modal-nav ul li:nth-of-type(3):before {
+    content: none;
+  }
+  .hero .modal-nav ul li a {
+    color: hsl(0, 0%, 98%);
+    font-size: 0.8rem;
+  }
+  .hero .modal-nav ul li a:hover {
+    color: #fff;
+  }
+  .hero .modal-nav ul li a:hover:after {
+    width: 100%;
+    background: hsl(0, 0%, 48%);
+  }
+  .hero .modal-nav ul li a:after {
+    content: "";
+    display: block;
+    margin: auto;
+    height: 2px;
+    width: 0px;
+    transition: width 0.5s ease, background-color 0.5s ease;
+  }
+  .container .title {
+    gap: 0;
+  }
+  .container .title .mastercraft {
+    margin-bottom: 1.5rem;
+  }
+  .container .title h1 {
+    margin-bottom: 1rem;
+  }
+  .container .title p {
+    margin-bottom: 2rem;
+  }
+  .container .title__buttons .btn-bookmark {
+    background-color: hsl(0, 0%, 98%);
+  }
+  .container .title__buttons .btn-bookmark span {
+    display: block;
+    padding: 0 1rem;
+  }
+  .container .stats__list {
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+    gap: 7.5rem;
+  }
+  .container .stats__list li:nth-of-type(2), .container .stats__list li:nth-of-type(3) {
+    margin-top: 0;
+    position: relative;
+  }
+  .container .stats__list li:nth-of-type(2)::before, .container .stats__list li:nth-of-type(3)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .container .stats__list li:nth-of-type(2):before, .container .stats__list li:nth-of-type(3):before {
+    top: 5%;
+    left: -3rem;
+    height: 90%;
+    width: 1px;
+  }
+  .container .about__heading {
+    margin-bottom: 2rem;
+  }
+  .container .about .cards .card {
+    position: relative;
+  }
+  .container .about .cards .card__heading, .container .about .cards .card__stock {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+  .container .about .cards .card__heading .product-name {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .container .about .cards .card__heading .pledge {
+    color: hsl(176, 50%, 47%);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .container .about .cards .card__stock {
+    align-items: center;
+  }
+  .container .about .cards .card__stock .stock-left {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .container .about .cards .card__stock .stock-left .left {
+    margin: auto 0;
+  }
+  .container .about .cards .card__stock .stock {
+    font-size: 2rem;
+    color: hsl(0, 0%, 0%);
+    font-weight: 700;
+    margin-right: 0.4rem;
+  }
+  .container .about .cards .card__stock .btn-reward {
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+  }
+  .container .about .cards .card__stock .out-of-stock {
+    background-color: hsl(0, 0%, 48%);
+    cursor: default;
+  }
+  .container .modal-project .about .cards .card__heading {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+  }
+  .container .modal-project .about .cards .card__heading h3 {
+    margin-right: 1rem;
+  }
+  .container .modal-project .about .cards .card__description {
+    margin-left: 1.9rem;
+  }
+  .container .modal-project .about .cards .card__stock {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.3rem;
+  }
+  .container .modal-project .about .cards .card__pledge {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-top: 1rem;
+    position: relative;
+    position: relative;
+  }
+  .container .modal-project .about .cards .card__pledge::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .container .modal-project .about .cards .card__pledge:before {
+    background: #ccc;
+    top: 0;
+    left: -1.5rem;
+    height: 1px;
+    width: calc(100% + 3rem);
+  }
+  .container .modal-project .about .cards .card__pledge label {
+    grid-column: 1/3;
+    justify-self: flex-start;
+    align-self: center;
+  }
+  .container .modal-project .about .cards .card__pledge .btn {
+    height: 3rem;
+  }
+  .container .modal-project .about .cards .card__pledge .placeholder {
+    justify-self: flex-end;
+  }
+  .container .modal-project .about .cards .card__pledge .error-message {
+    top: 4.1rem;
+    left: 21rem;
+  }
+  .modal-confirm .confirm {
+    width: min(34rem, 90%);
+    top: 24rem;
+  }
+}/*# sourceMappingURL=style.css.map */

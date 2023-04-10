@@ -1,0 +1,40 @@
+@mixin set-flex($flex-direction: row, $align-items: stretch, $justify-content: stretch) {
+    display: flex;
+    flex-direction: $flex-direction;
+    align-items: $align-items;
+    justify-content: $justify-content;
+}
+
+@mixin set-grid($align-items: stretch, $justify-content: stretch) {
+    display: grid;
+    align-items: $align-items;
+    justify-content: $justify-content;
+}
+
+@mixin pseudo(
+    $loc: before,
+    $content: '', 
+    $pos: absolute,
+    $top: 0,
+    $bottom: 0,
+    $left: 0,
+    $right: 0,
+    ){
+    position: relative;
+    
+    &::#{$loc} {
+    content: $content;
+    position: $pos;
+    top: $top;
+    bottom: $bottom;
+    left: $left;
+    right: $right;
+    @content;
+    }
+}
+
+@mixin mq($size){
+    @media only screen and (min-width: $size){
+        @content
+    }
+}

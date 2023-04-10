@@ -1,0 +1,776 @@
+@use 'functions' as *;
+@use 'colors' as *;
+@use 'fonts' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700&display=swap');
+
+// UNIVERSAL
+
+:root{
+    --current-pledge: 89914;
+    --goal-pledge: 100000;
+    --progress: 0%;
+}
+
+body{
+  font-size: 16px;
+  font-family: $commissioner;
+  background-color: $grey-color;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+
+img{
+    display: block;
+}
+
+
+p, label, span{
+    color: $dark-grey-color;
+    line-height: 1.5;
+}
+
+ul{
+    list-style: none;
+}
+
+.nav,
+.title,
+.stats,
+.about,
+.selection,
+.confirm{
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.btn{
+    background-color: $moderate-cyan-color;
+    cursor: pointer;
+    display: block;
+    border: #fff;
+    border-radius: 4rem;
+    color: #fff;
+    font-weight: 700;
+    &:hover{
+        background-color: $dark-cyan-color;
+    }
+}
+
+.disabled{
+    opacity: 0.5;
+    cursor: default;
+}
+
+.modal-container{
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    &.show-modal {
+        display: block;
+    }
+}
+
+// Open modal animation
+@keyframes openmodal{
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+// Main Hero
+
+.hero{
+    @include set-flex($justify-content: space-between, $align-items:center);
+    background: url(../images/image-hero-mobile.jpg) no-repeat;
+    background-size: 100% 100%;
+    padding: 1rem 1.5rem 16.5rem 1.5rem;
+    .toggle{
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;      
+        position: relative;
+    }
+    .modal-nav{
+        background-color: rgba(0,0,0,0.6);
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        &.show-modal {
+            display: block;
+        }
+    ul{
+        position: fixed;
+        width: min(45rem, 90%);
+        top: 5.5rem;
+        left: 5%;
+        animation-name: openmodal;
+        animation-duration: 1s;
+        z-index: 20;
+        li{
+            &:nth-of-type(1), &:nth-of-type(2){
+                padding-bottom: 1.5rem;
+            }
+
+            &:nth-of-type(2), &:nth-of-type(3){
+                padding-top: 1.5rem;
+                @include pseudo;
+                &:before {
+                    background: #ccc;
+                    top: 0;
+                    left: -1.5rem;
+                    height: 1px;
+                    width: calc(100% + 3rem);
+                  }
+            }
+
+            a{
+                color: $black-color;
+                font-size: 1rem;
+                font-weight: 500;
+                text-decoration: none;
+                
+                &:hover{
+                    color: $dark-grey-color;
+                }
+            }
+
+        }
+    }
+    }
+}
+
+// Set both container and confirm modal to be in the center
+
+.container, .confirm{
+    margin: 0 auto;
+}
+
+// Whole Container
+
+.container{
+    width: min(43rem, 90%);
+    margin-top: -3.5rem;
+    padding-bottom: 6rem;
+    gap: 1rem;
+    @include set-flex($flex-direction: column);
+
+    //Main title
+
+    .title{
+        @include set-grid;
+        text-align: center;
+        gap: 1.5rem;
+        img{
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+
+        .mastercraft{
+            margin: 0 auto;
+            margin-top: -3.25rem;
+        }
+
+        h1{
+            font-size: 1.5rem;
+        }
+
+
+        &__buttons{
+            @include set-flex($justify-content: space-between);
+
+            .btn-project{
+                padding: 0 2.5rem;
+            }
+
+            .btn-bookmark{
+                @include set-flex($align-items: center);
+
+                &:hover{
+                    opacity: 0.7;
+                }
+                
+                span{
+                    display: none;
+                }
+                .bookmark, .bookmarked {
+                    display: none;
+                    &.show-bookmark{
+                        display: block;
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    .stats{
+
+        &__list{
+        text-align: center;
+        li{
+            &:nth-of-type(2), &:nth-of-type(3){
+                margin-top: 3rem;
+                @include pseudo;
+                &:before {
+                    background: #ccc;
+                    top: -1.5rem;
+                    left: 35%;
+                    height: 1px;
+                    width: 30%;
+                  }
+            }
+
+            .money-pledged,
+            .total-backers,
+            .days-left
+            {
+                font-size: 2rem;
+                font-weight: 700;
+                color: $black-color;
+            }
+
+        }
+        }
+
+        &__bar{
+            margin-top: 2.5rem;
+            background-color: $grey-color;
+            height: 0.8rem;
+            width: 100%;
+            border-radius: 1rem;
+            z-index: 1;
+            .progress{
+                background-color: $moderate-cyan-color;
+                width: var(--progress);
+                height: 0.8rem;
+                border-radius: 1rem;
+            }
+        }
+    }
+
+    .about{
+
+        &__heading{
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        &__description{
+            span{
+                margin: 2rem 0;
+                display:inline-block;
+            }
+        }
+        // Cards
+
+        .cards{
+
+            @include set-flex($flex-direction: column);
+            gap: 1rem;
+
+            .card{
+
+                border: 1px solid #ccc;
+                border-radius: 0.5rem;
+                padding: 1.5rem;
+                @include set-grid;
+                gap: 1rem;
+
+                &__heading{
+                    .product-name{
+                        font-size: 1rem;
+                        margin-bottom: 0.2rem;
+                    }
+                    .pledge{
+                        color: $moderate-cyan-color;
+                        font-weight: 700;
+                    }
+                }
+
+                &__stock{
+                    align-items: center;
+                    .stock-left{
+                        @include set-flex;
+                        .left{
+                            margin: auto 0;
+                        }
+                    }
+                    .stock{
+                        font-size: 2rem;
+                        color: $black-color;
+                        font-weight: 700;
+                        margin-right: 0.4rem;
+                    }
+
+                    .btn-reward{
+                        margin-top: 1rem;
+                        padding: 1rem 2rem;
+
+                    }
+
+                    .out-of-stock{
+                        background-color: $dark-grey-color;
+                        cursor: default;
+                    }
+                }
+            }
+        }
+    }
+    .modal-project{
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        &.show-modal {
+            display: block;
+        }
+        .about{
+            position: absolute;
+            top: 7.5rem;
+            left: 0;
+            right: 0;
+            width: min(43rem, 90%);
+            margin: 0 auto;
+            z-index: 20;
+            animation-name: openmodal;
+            animation-duration: 1s;
+
+            &__heading{
+                @include set-flex($justify-content: space-between, $align-items: center);
+                margin-bottom: 1rem;
+                img{
+                    cursor: pointer;
+                }
+            }
+
+            &__description{
+                margin-bottom: 2rem;
+            }
+
+
+            .cards{
+                .card{
+
+                    &__heading{
+                        @include set-grid;
+                        grid-template-columns: min-content 1fr;
+                        
+                        input{
+                            grid-row: 1/3;
+                            margin-right: 1rem;
+                        }
+
+
+                    }
+
+                    &__stock{
+                        .stock{
+                            font-size: 1.2rem;
+                        }
+                    }
+
+                    &__pledge{
+                        @include set-grid($justify-content: center);
+                        display: none;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 1rem;
+                        padding-top: 1rem;
+                        position: relative;
+                        @include pseudo;
+                        &:before {
+                            background: #ccc;
+                            top: 0;
+                            left: -1.5rem;
+                            height: 1px;
+                            width: calc(100% + 3rem);
+                          }
+
+                        label{
+                            grid-column: 1/3;
+                            justify-self: center;
+                        }
+
+                        .btn{
+                            height: 3rem;
+                        }
+    
+                        .placeholder{
+                            .btn-input{
+                                background-color: #fff;
+                                border: #ccc 1px solid;
+                                color: $black-color;
+                                text-align: center;
+                                width: 6.25rem;
+                                cursor: text;
+                                &:hover, &:focus{
+                                    outline: none;
+                                }
+        
+                            }
+                            @include pseudo(after);
+                            &::after{
+                                content: attr(data-placeholder);
+                                top: 0.9rem;
+                                left: 1.5rem;
+                                pointer-events: none;
+                                opacity: 0.5;
+                            }
+                        }
+
+                        .btn-continue{
+                            width: 7.5rem;
+                            justify-self: flex-end;
+                        }
+
+                        &.error{
+                            .btn-input{
+                                border-color: $error-color;
+                            }
+            
+                            small{
+                                visibility: visible;
+                            }
+                        }
+
+                        &.success{
+                            .btn-input{
+                                border-color: $success-color;
+                            }
+                        }
+
+                        .error-message{
+                            position: absolute;
+                            top: 6.3rem;
+                            color: $error-color;
+                            visibility: hidden;
+                        }
+                    }
+                }
+
+
+            }
+        }
+    }
+
+}
+
+// Confirm Modal 
+.modal-confirm{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    &.show-modal {
+        display: block;
+    }
+    .confirm{
+        width: min(43rem, 90%);
+        text-align: center;
+        position: absolute;
+        top: 8.9rem;
+        left: 0;
+        right: 0;
+        animation-name: openmodal;
+        animation-duration: 1s;
+    
+        img, .btn{
+            margin: 0 auto;
+        }
+
+        img{
+            margin-bottom: 2rem;
+        }
+
+        h3{
+            margin-bottom: 1rem;
+        }
+
+        p{
+            margin-bottom: 2rem;
+        }
+        .btn{
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+    }
+}
+
+
+@include mq(44rem){
+
+    .hero{
+        background: url(../images/image-hero-desktop.jpg) no-repeat;
+        background-size: 100% 100%;
+        padding: 2rem 10.5rem 15.5rem 10.5rem;
+
+    .toggle{
+        display: none
+    }
+    
+    .modal-nav{
+        display: block;
+        position: static;
+        z-index: 0;
+        background-color: rgba(0,0,0,0);
+        ul{
+            @include set-flex;
+            gap: 2.5rem;
+            position: static;
+            width: auto;
+            background-color: transparent;
+            padding: 0;
+            li{
+                &:nth-of-type(1), &:nth-of-type(2){
+                    padding-bottom: 0;
+                }
+    
+                &:nth-of-type(2), &:nth-of-type(3){
+                    padding-top: 0;
+                    &:before {
+                        content: none;
+                      }
+                }
+
+
+
+                a{
+                    color: $grey-color;
+                    font-size: 0.8rem;
+                    &:hover{
+                        color: #fff;
+                        &:after {
+                            width: 100%;
+                            background: $dark-grey-color;
+                    }
+                    }
+                    &:after {
+                        content: '';
+                        display: block;
+                        margin: auto;
+                        height: 2px;
+                        width: 0px;
+                        transition: width .5s ease, background-color .5s ease;
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+    .container{
+        //Main title
+
+        .title{
+            gap: 0;
+
+            .mastercraft{
+                margin-bottom: 1.5rem;
+            } 
+
+            h1{
+                margin-bottom: 1rem;
+            }
+
+            p{
+                margin-bottom: 2rem;
+            }
+
+
+            &__buttons{
+
+                .btn-bookmark{
+                    background-color: $grey-color;
+                    
+                    span{
+                        display: block;
+                        padding: 0 1rem;
+                    }
+
+
+                }
+            }
+        }
+
+        .stats{
+            &__list{
+            text-align: start;
+            @include set-flex;
+            gap: 7.5rem;
+            li{
+                &:nth-of-type(2), &:nth-of-type(3){
+                    margin-top: 0;
+                    @include pseudo;
+                    &:before {
+                        top: 5%;
+                        left: -3rem;
+                        height: 90%;
+                        width: 1px;
+                    }
+                }
+
+            }
+            }
+        }
+
+        .about{
+
+            &__heading{
+                margin-bottom: 2rem;
+            }
+
+            // Cards
+
+            .cards{
+                .card{
+                    position: relative;
+
+                    &__heading, &__stock{
+                        @include set-flex($justify-content: space-between);
+                    }
+
+                    &__heading{
+                        .product-name{
+                            font-size: 1rem;
+                            margin-bottom: 0.2rem;
+                        }
+                        .pledge{
+                            color: $moderate-cyan-color;
+                            font-weight: 700;
+                            margin-bottom: 0.2rem;
+                        }
+                    }
+
+                    &__stock{
+                        align-items: center;
+                        .stock-left{
+                            @include set-flex;
+                            .left{
+                                margin: auto 0;
+                            }
+                        }
+                        .stock{
+                            font-size: 2rem;
+                            color: $black-color;
+                            font-weight: 700;
+                            margin-right: 0.4rem;
+                        }
+
+                        .btn-reward{
+                            margin-top: 1rem;
+                            padding: 1rem 2rem;
+                        }
+
+                        .out-of-stock{
+                            background-color: $dark-grey-color;
+                            cursor: default;
+                        }
+                    }
+                }
+            }
+        }
+        .modal-project{
+            .about{
+
+                .cards{
+                    .card{
+
+                        &__heading{
+                            @include set-flex($align-items: center);
+
+                            h3{
+                                margin-right: 1rem;
+                            }
+                        }
+
+                        &__description{
+                            margin-left: 1.9rem;
+                        }
+
+                        &__stock{
+                            position: absolute;
+                            right: 1.5rem;
+                            top: 1.3rem; // 1.3 rem to account ofr the margin-bottom = 0.2rem that have to be applied to be in center
+
+                        }
+
+                        &__pledge{
+                            grid-template-columns: repeat(4, 1fr);
+                            gap: 1rem;
+                            padding-top: 1rem;
+                            position: relative;
+                            @include pseudo;
+                            &:before {
+                                background: #ccc;
+                                top: 0;
+                                left: -1.5rem;
+                                height: 1px;
+                                width: calc(100% + 3rem);
+                              }
+    
+                            label{
+                                grid-column: 1/3;
+                                justify-self: flex-start;
+                                align-self: center;
+                            }
+    
+                            .btn{
+                                height: 3rem;
+                            }
+        
+                            .placeholder{
+                                justify-self: flex-end;
+                            }
+
+                            .error-message{
+                                top: 4.1rem;
+                                left: 21rem;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+    }
+// Confirm Modal 
+.modal-confirm{
+    .confirm{
+        width: min(34rem, 90%);
+        top: 24rem;
+    }
+}
+
+
+}
+    
